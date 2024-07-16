@@ -7,11 +7,19 @@
 A Discord bot for monitoring GPU usage and running various commands, designed to assist users in managing and tracking server resources.
 
 ## Features
+The main commands to interact with the bot are listed below. Remember, each command must begin with a `!`:
 
-- **gpustat**: Displays the status of used GPUs.
-- **runstatus**: Displays a detailed log of the codes being executed on the server.
-- **checklog**: Displays the last 5 lines of a log file in txt or log format.
-- **roll_dice**: Simulates rolling dice.
+- **!gpustat**: Displays the status of used GPUs.
+- **!runstatus**: Displays a detailed log of the codes being executed on the server.
+- **!checklog**: Displays the last 5 lines of a log file in txt or log format.
+- **!roll_dice**: Simulates rolling dice.
+
+Additionally, the bot has a feature that allows it to identify if someone is using a GPU. This feature announces the usage in Discord, notifying when someone has been using the GPU for more than X hours and when they stop using it.
+
+<p align="center"> 
+<img src="./images/example.png" width=250/>
+</p>
+
 
 ## Setup
 
