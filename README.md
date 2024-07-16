@@ -17,7 +17,7 @@ The main commands to interact with the bot are listed below. Remember, each comm
 Additionally, the bot has a feature that allows it to identify if someone is using a GPU. This feature announces the usage in Discord, notifying when someone has been using the GPU for more than X hours and when they stop using it.
 
 <p align="center"> 
-<img src="./images/example.png" width=250/>
+<img src="./images/example.png" width=500/>
 </p>
 
 
@@ -39,20 +39,12 @@ DISCORD_TOKEN_RELELA_1=your_discord_bot_token
 DISCORD_CHANNEL_1=your_discord_channel_id
 ```
 
-### Data Files
-
-The bot uses a CSV file to track user activity. Ensure the `./execution_data/df_backup.csv` file exists in the root directory:
-
-```csv
-user,datetime
-```
-
 ## Running the Bot
 
 Run the bot using the following command:
 
 ```sh
-python bot.py
+python main.py
 ```
 
 ## Commands
@@ -70,3 +62,7 @@ python bot.py
 
 - `!checklog [path]`: Displays the last 5 lines of a log file in txt or log format.
 - `!roll_dice [number_of_dice] [number_of_sides]`: Simulates rolling dice.
+
+<p align="center"> 
+<img src="./images/banner.gif" width=300/>
+</p>
