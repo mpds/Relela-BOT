@@ -3,3 +3,4 @@
 /backup_data
 __pycache__/
 /.ruff_cache
+/tests
