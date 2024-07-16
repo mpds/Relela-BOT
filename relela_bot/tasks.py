@@ -1,9 +1,16 @@
 import os
-import pandas as pd
 from datetime import datetime
+
+import pandas as pd
 from discord.ext import tasks
+
+from relela_bot.discord_utils import (
+    send_gpu_alert_embed_message,
+    send_gpu_not_usage_embed_message,
+    send_gpu_usage_embed_message,
+)
 from relela_bot.nvidia_utils import get_running_status
-from relela_bot.discord_utils import send_gpu_usage_embed_message, send_gpu_alert_embed_message, send_gpu_not_usage_embed_message
+
 
 def start_tasks(bot, CHANNEL_1):
     @bot.listen()
@@ -11,11 +18,15 @@ def start_tasks(bot, CHANNEL_1):
         task_loop.start()
 
     @tasks.loop(seconds=10)
-    async def task_loop(backup_path="./backup_data/df_backup.csv", seconds_to_check=10, seconds_to_alert=30):
+    async def task_loop(
+        backup_path="./backup_data/df_backup.csv",
+        seconds_to_check=10,
+        seconds_to_alert=30,
+    ):
         print("working...")
         channel = bot.get_channel(int(CHANNEL_1))
         run_info = get_running_status()
-        
+
         if os.path.exists(backup_path):
             df_backup = pd.read_csv(backup_path, index_col=[0])
         else:
@@ -43,8 +54,10 @@ def start_tasks(bot, CHANNEL_1):
                 min_date = df_backup[df_backup["user"] == user_name]["datetime"].min()
                 max_date = df_backup[df_backup["user"] == user_name]["datetime"].max()
                 if (max_date - min_date).seconds >= seconds_to_alert:
-                    await send_gpu_alert_embed_message(channel, user_name, (max_date - min_date).seconds/3600)
-                    #df_backup = df_backup[df_backup["user"] != user_name]
+                    await send_gpu_alert_embed_message(
+                        channel, user_name, (max_date - min_date).seconds / 3600
+                    )
+                    # df_backup = df_backup[df_backup["user"] != user_name]
         else:
             for user_name in df_backup["user"].unique():
                 max_date = df_backup[df_backup["user"] == user_name]["datetime"].max()

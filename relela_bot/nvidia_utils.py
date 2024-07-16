@@ -1,5 +1,7 @@
 import os
+
 import nvidia_smi
+
 
 # Module for loading Nvidia SMI
 def get_gpu_status():
@@ -20,6 +22,7 @@ def get_gpu_status():
 
     nvidia_smi.nvmlShutdown()
     return gpu_info
+
 
 # Module for getting running status
 def get_running_status():

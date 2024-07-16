@@ -1,13 +1,16 @@
-import random
 import os
+import random
+
 from discord.ext import commands
-from relela_bot.nvidia_utils import get_gpu_status, get_running_status
+
 from relela_bot.discord_utils import send_embed_message
+from relela_bot.nvidia_utils import get_gpu_status, get_running_status
+
 
 def register_commands(bot):
     @bot.command(name="commands", help="show the commands availables")
     async def help(ctx):
-        title="Commands availables"
+        title = "Commands availables"
         message = """
         📌 gpustat: Displays the status of used GPUs.
         📌 runstatus: Displays a detailed log of the codes being executed on the server. 
@@ -15,7 +18,7 @@ def register_commands(bot):
         📌 checklog: Displays the last 5 lines of a log in txt or log format. Example: !checklog [path]
         📌 roll_dice: Roll a dice. Example: !roll_dice 2 6
                 """
-        
+
         image_path = "monkey.jpeg"
         await send_embed_message(ctx, title, message, image_path)
 
@@ -26,7 +29,10 @@ def register_commands(bot):
             print(info)
             await ctx.send(info)
 
-    @bot.command(name="runstatus", help="Displays a detailed log of the codes being executed on the server.")
+    @bot.command(
+        name="runstatus",
+        help="Displays a detailed log of the codes being executed on the server.",
+    )
     async def runstatus(ctx):
         run_info = get_running_status()
         if run_info:
@@ -48,7 +54,9 @@ def register_commands(bot):
                         usage_gpu = line.split("|")[2].strip()
 
                 hour_date = line_list[3].split(":")[0]
-                hour_date = f"{hour_date} AM" if int(hour_date) < 12 else f"{hour_date} PM"
+                hour_date = (
+                    f"{hour_date} AM" if int(hour_date) < 12 else f"{hour_date} PM"
+                )
 
                 title = "Running Status"
                 str_out = f"""
@@ -70,10 +78,15 @@ def register_commands(bot):
 
     @bot.command(name="roll_dice", help="Simulates rolling dice.")
     async def roll(ctx, number_of_dice: int, number_of_sides: int):
-        dice = [str(random.choice(range(1, number_of_sides + 1))) for _ in range(number_of_dice)]
+        dice = [
+            str(random.choice(range(1, number_of_sides + 1)))
+            for _ in range(number_of_dice)
+        ]
         await ctx.send(", ".join(dice))
 
-    @bot.command(name="checklog", help="Displays the last 5 lines of a log in txt or log format.")
+    @bot.command(
+        name="checklog", help="Displays the last 5 lines of a log in txt or log format."
+    )
     async def checklog(ctx, path_log: str, n: int = 5):
         with open(path_log, "r") as file:
             lines = file.read().splitlines()

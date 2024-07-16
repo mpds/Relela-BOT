@@ -1,3 +1,4 @@
 .env
 /execution_data
 /backup_data
+/__pycache__

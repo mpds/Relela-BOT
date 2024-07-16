@@ -1,7 +1,11 @@
-import discord
 from datetime import datetime
 
-async def send_embed_message(ctx, title, description, image_path=None, color=discord.Color.blue()):
+import discord
+
+
+async def send_embed_message(
+    ctx, title, description, image_path=None, color=discord.Color.blue()
+):
     embed = discord.Embed(title=title, description=description, color=color)
     if image_path:
         image_extension = image_path.split(".")[-1]
@@ -11,6 +15,7 @@ async def send_embed_message(ctx, title, description, image_path=None, color=dis
     else:
         await ctx.send(embed=embed)
 
+
 async def send_gpu_usage_embed_message(channel, user):
     title = "GPU Usage Alert"
     description = f"El usuario **{user}** ha comenzado a utilizar una GPU."
@@ -18,11 +23,12 @@ async def send_gpu_usage_embed_message(channel, user):
     embed = discord.Embed(title=title, description=description, color=color)
     embed.set_thumbnail(url="attachment://thumbnail.gif")
     embed.set_footer(text=f"Timestamp: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    
-    image_path = "./relela_bot/bot_images/bird.gif" 
+
+    image_path = "./relela_bot/bot_images/bird.gif"
     file = discord.File(image_path, filename="thumbnail.gif")
-    
+
     await channel.send(file=file, embed=embed)
+
 
 async def send_gpu_alert_embed_message(channel, user, hours):
     title = "GPU Usage Alert"
@@ -31,11 +37,12 @@ async def send_gpu_alert_embed_message(channel, user, hours):
     embed = discord.Embed(title=title, description=description, color=color)
     embed.set_thumbnail(url="attachment://thumbnail.gif")
     embed.set_footer(text=f"Timestamp: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    
-    image_path = "./relela_bot/bot_images/check.gif" 
+
+    image_path = "./relela_bot/bot_images/check.gif"
     file = discord.File(image_path, filename="thumbnail.gif")
-    
+
     await channel.send(file=file, embed=embed)
+
 
 async def send_gpu_not_usage_embed_message(channel, user):
     title = "GPU Usage Alert"
@@ -44,8 +51,8 @@ async def send_gpu_not_usage_embed_message(channel, user):
     embed = discord.Embed(title=title, description=description, color=color)
     embed.set_thumbnail(url="attachment://thumbnail.gif")
     embed.set_footer(text=f"Timestamp: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    
-    image_path = "./relela_bot/bot_images/finished.gif" 
+
+    image_path = "./relela_bot/bot_images/finished.gif"
     file = discord.File(image_path, filename="thumbnail.gif")
-    
+
     await channel.send(file=file, embed=embed)
