@@ -12,8 +12,7 @@ The main commands to interact with the bot are listed below. Remember, each comm
 - `!commands`: Show the available commands.
 - `!gpustat`: Displays the status of used GPUs.
 - `!runstatus`: Displays a detailed log of the codes being executed on the server.
-- `!checklog [path]`: Displays the last 5 lines of a log file in txt or log format.
-- `!roll_dice [number_of_dice] [number_of_sides]`: Simulates rolling dice.
+- `!ping`: Check the bot's status.
 
 
 Additionally, the bot has a feature that allows it to identify if someone is using a GPU. This feature announces the usage in Discord, notifying when someone has been using the GPU for more than X hours and when they stop using it.
