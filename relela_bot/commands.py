@@ -32,19 +32,17 @@ def register_commands(bot):
             await ctx.send(f"{title}\n```python\n{info}```")
 
     @bot.command(
-        name="runstatus",
-        help="Displays a detailed log of the codes being executed on the server.",
-    )
+    name="runstatus",
+    help="Displays a detailed log of the codes being executed on the server.",
+)
     async def runstatus(ctx):
         run_info = get_running_status()
         if run_info:
-            
             try:
                 run_gpustat = subprocess.run(["gpustat"], capture_output=True, text=True, check=True).stdout
             except (subprocess.SubprocessError, FileNotFoundError) as e:
                 run_gpustat = ""
                 await ctx.send(f">>> Error running gpustat: {str(e)}")
-            print(run_gpustat)
 
             interest_values = [0, 2, 3, 8, 9]
 
@@ -54,23 +52,44 @@ def register_commands(bot):
                 line_list = line.split()
                 line_list = [i for i in line_list if i]
 
+                if len(line_list) < max(interest_values) + 1:
+                    continue  # Skip if line doesn't have enough elements
+
                 command_str = " ".join(line_list[10:])
                 line_list = [line_list[i] for i in interest_values]
 
-                for line in run_gpustat.splitlines():
-                    if line_list[0] in line:
-                        gpu_name = line.split("|")[0].strip()
-                        usage_gpu = line.split("|")[2].strip()
-                    else:
-                        gpu_name = "N/A"
-                        usage_gpu = "N/A"
+                # Initialize GPU info as N/A
+                gpu_name = "N/A"
+                usage_gpu = "N/A"
+                
+                # Search for GPU info only if we have a username to match
+                if line_list[0] and run_gpustat:
+                    for gpu_line in run_gpustat.splitlines():
+                        if line_list[0] in gpu_line:
+                            parts = gpu_line.split("|")
+                            if len(parts) > 2:
+                                gpu_name = parts[0].strip()
+                                usage_gpu = parts[2].strip()
+                            break
 
-                hour_date = line_list[3].split(":")[0]
-                hour_date = (
-                    f"{hour_date} AM" if int(hour_date) < 12 else f"{hour_date} PM"
-                )
+                # Parse the time information more safely
+                time_info = line_list[3] if len(line_list) > 3 else ""
+                hour_date = time_info  # Default to full time string
+                
+                try:
+                    # Try to parse as "HH:MM:SS" format
+                    if ":" in time_info:
+                        time_parts = time_info.split(":")
+                        if len(time_parts) >= 2:
+                            hour = int(time_parts[0])
+                            period = "AM" if hour < 12 else "PM"
+                            if hour > 12:
+                                hour -= 12
+                            hour_date = f"{hour}:{time_parts[1]} {period}"
+                except (ValueError, IndexError):
+                    pass  # Keep original format if parsing fails
+
                 hostname = socket.gethostname()
-
                 title = "Running Status"
                 str_out = f"""
                 ```python
