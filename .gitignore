@@ -1,3 +1,4 @@
+env/
 .env
 /execution_data
 /backup_data
