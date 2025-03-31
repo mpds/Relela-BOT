@@ -112,7 +112,8 @@ def register_commands(bot):
     @bot.command(name="ping", help="Check the bot's latency.")
     async def ping(ctx):
         latency = round(bot.latency * 1000)
-        await ctx.send(f"🏓 Pong! Latency: {latency}ms")
+        hostname = socket.gethostname()
+        await ctx.send(f"🏓 {hostname}: Pong! Latency: {latency}ms")
 
     # @bot.command(name="roll_dice", help="Simulates rolling dice.")
     # async def roll(ctx, number_of_dice: int, number_of_sides: int):
