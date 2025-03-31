@@ -31,6 +31,7 @@ Additionally, the bot has a feature that allows it to identify if someone is usi
 - Discord account and bot token
 - NVIDIA GPU and drivers
 - `nvidia-smi` installed and accessible from the command line
+- `gpustat` installed and accessible from the command line
 
 ### Environment Variables
 
