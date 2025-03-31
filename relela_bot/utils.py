@@ -21,5 +21,7 @@ def init_dataframes():
 # Module for initializing bot
 def init_bot():
     intents = discord.Intents.default()
-    intents.message_content = True
+    intents.message_content = True  # Required for !commands
+    intents.presences = False       # Disable unused intents
+    intents.members = False         # Disable unused intents
     return commands.Bot(intents=intents, command_prefix="!")
