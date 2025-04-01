@@ -20,8 +20,8 @@ def start_tasks(bot, CHANNEL_1):
     @tasks.loop(seconds=10)
     async def task_loop(
         backup_path="./backup_data/df_backup.csv",
-        seconds_to_check=3600,
-        seconds_to_alert=86400,
+        seconds_to_check=20,
+        seconds_to_alert=86401,
     ):
         # print("working...")
         channel = bot.get_channel(int(CHANNEL_1))
